@@ -1,0 +1,11 @@
+{
+    "config": {
+        "platform": {"php": "7.2"},
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "require": {
+        "laminas/laminas-diactoros": "^2.3",
+        "laminas/laminas-httphandlerrunner": "^1.2"
+    }
+}
