@@ -1,0 +1,13 @@
+.sort-by {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	vertical-align: middle;
+}
+.sort-by a {
+	line-height: 0;
+}
+.sort-by img {
+	transform: scale(1.5);
+	margin: 1px;
+}

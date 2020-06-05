@@ -19,7 +19,7 @@ abstract class Repository
      *
      * @param \Psr\Container\ContainerInterface $container
      */
-    public function __construct(Container $connection)
+    public function __construct(Container $container)
     {
         $this->db = $container->get(PDO::class);
     }

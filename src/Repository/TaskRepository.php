@@ -33,7 +33,7 @@ class TaskRepository extends Repository
      *
      * @param \Psr\Container\ContainerInterface $container
      */
-    public function __construct(PDO)
+    public function __construct(Container $container)
     {
         parent::__construct($container);
 
@@ -59,18 +59,46 @@ class TaskRepository extends Repository
     }
 
     /**
+     * Get all task count
+     *
+     * @return int
+     */
+    public function getTaskCount(): int
+    {
+        $sql = "SELECT count(*) FROM tasks";
+        $statm = $this->db->prepare($sql);
+        $statm->execute();
+
+        $arr = $statm->fetch();
+
+        return array_shift($arr);
+    }
+
+    /**
      * Get multiple tasks
      *
      * @param array|null $ids task ids
      * @param int $limit
      * @param int $offset
+     * @param string $sort
      *
      * @return array of \App\Model\Task
      */
-    public function getTasks(?array $ids = null, int $limit = 10, int $offset = 0): array
-    {
-        $sql = "SELECT * FROM tasks %s LIMIT %d OFFSET %d";
-        $parts = ['', $limit, $offset];
+    public function getTasks(
+        ?array $ids = null,
+        int $limit = 10,
+        int $offset = 0,
+        string $sort = null
+    ): array {
+        $sql = "
+            SELECT t.* FROM tasks AS t
+            INNER JOIN users AS u
+                ON t.user_id = u.id
+            %s
+            %s
+            LIMIT %d OFFSET %d";
+
+        $parts = ['', '', $limit, $offset,];
         $params = [];
 
         if ($ids !== null) {
@@ -83,6 +111,15 @@ class TaskRepository extends Repository
             } else {
                 return [];
             }
+        }
+
+        switch ($sort) {
+            case "name-asc":    $parts[1] = "ORDER BY name ASC";    break;
+            case "name-desc":   $parts[1] = "ORDER BY name DESC";   break;
+            case "email-asc":   $parts[1] = "ORDER BY email ASC";   break;
+            case "email-desc":  $parts[1] = "ORDER BY email DESC";  break;
+            case "status-asc":  $parts[1] = "ORDER BY status ASC";  break;
+            case "status-desc": $parts[1] = "ORDER BY status DESC"; break;
         }
 
         $query = sprintf($sql, ...$parts);

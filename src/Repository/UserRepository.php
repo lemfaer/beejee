@@ -36,7 +36,7 @@ class UserRepository extends Repository
             str_repeat("?,", count($ids) - 1) . '?'
         );
 
-        $statm = $this->db->prepare($query);
+        $statm = $this->db->prepare($sql);
         $statm->execute($params);
 
         $users = $this->buildUsers($statm);

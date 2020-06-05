@@ -1,0 +1,87 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">
+        Name
+        <div class="sort-by">
+          {% if sort != "name-asc" %}
+            <a href="/sort/name-asc">
+              <img src="/icons/caret-top.svg" alt="caret" />
+            </a>
+          {% endif %}
+          {% if sort != "name-desc" %}
+            <a href="/sort/name-desc">
+              <img src="/icons/caret-bottom.svg" alt="caret" />
+            </a>
+          {% endif %}
+        </div>
+      </th>
+      <th scope="col">
+        Email
+        <div class="sort-by">
+          {% if sort != "email-asc" %}
+            <a href="/sort/email-asc">
+              <img src="/icons/caret-top.svg" alt="caret" />
+            </a>
+          {% endif %}
+          {% if sort != "email-desc" %}
+            <a href="/sort/email-desc">
+              <img src="/icons/caret-bottom.svg" alt="caret" />
+            </a>
+          {% endif %}
+        </div>
+      </th>
+      <th scope="col">Description</th>
+      <th scope="col">
+        Status
+        <div class="sort-by">
+          {% if sort != "status-asc" %}
+            <a href="/sort/status-asc">
+              <img src="/icons/caret-top.svg" alt="caret" />
+            </a>
+          {% endif %}
+          {% if sort != "status-desc" %}
+            <a href="/sort/status-desc">
+              <img src="/icons/caret-bottom.svg" alt="caret" />
+            </a>
+          {% endif %}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+      <tr>
+        <td>{{ task.user.name }}</td>
+        <td>{{ task.user.email }}</td>
+        <td><pre>{{ task.description }}<pre></td>
+        <td>{{ task.status }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if page.display %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page.prev %}
+        <li class="page-item">
+          <a class="page-link" href="/sort/{{ sort }}/page/{{ page.prev }}">&lt;</a>
+        </li>
+      {% endif %}
+      {% for i in range(page.start, page.end) %}
+        <li class="page-item">
+          <a class="page-link" href="/sort/{{ sort }}/page/{{ i }}">{{ i }}</a>
+        </li>
+      {% endfor %}
+      {% if page.next %}
+        <li class="page-item">
+          <a class="page-link" href="/sort/{{ sort }}/page/{{ page.next }}">&gt;</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endblock %}

@@ -5,6 +5,28 @@ namespace App\Core;
 abstract class Model
 {
     /**
+     * Check for model value
+     *
+     * @param string $name property name
+     *
+     * @return boolean
+     */
+    public function __isset(string $name)
+    {
+        $method = sprintf("get%s", ucfirst($name));
+
+        if (method_exists($this, $method)) {
+            return true;
+        }
+
+        if (property_exists($this, $name)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get model values
      *
      * @param string $name property name

@@ -2,4 +2,11 @@
 2. model user
 3. repository task
 4. repository user
-5. ...
+5. database
+6. run
+7. twig
+8. table view
+9. pagination
+10. sorting
+11. new task
+12. ...

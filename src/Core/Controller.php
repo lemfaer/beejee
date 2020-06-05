@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use Twig\Environment;
 use Psr\Container\ContainerInterface as Container;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamFactoryInterface as StreamFactory;
@@ -54,6 +55,25 @@ abstract class Controller
                     ->get(StreamFactory::class)
                     ->createStream($body)
             );
+    }
+
+    /**
+     * Twig template response
+     *
+     * @param int $code http code
+     * @param mixed $name The template name
+     * @param array $context An array of parameters to pass to the template
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function template(int $code, $name, array $context = []): Response
+    {
+        return $this->response(
+            $code,
+            $this->container
+                ->get(Environment::class)
+                ->render("$name.twig", $context)
+        );
     }
 
     /**

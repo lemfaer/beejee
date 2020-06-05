@@ -17,6 +17,9 @@ class ErrorHandler
      */
     public function exceptionHandler(Throwable $e): void
     {
+        var_export($e);
+        die;
+
         header("Content-Type: application/json");
 
         echo json_encode([

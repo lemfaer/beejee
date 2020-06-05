@@ -17,7 +17,7 @@ use App\Core\Model;
 class Task extends Model
 {
     protected const STATUS_DEFAULT = "new";
-    protected const STATUS_NEW = "new"
+    protected const STATUS_NEW = "new";
     protected const STATUS_DONE = "done";
 
     protected $id;

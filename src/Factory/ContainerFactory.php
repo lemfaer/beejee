@@ -12,6 +12,7 @@ use Psr\Http\Message\{ServerRequestInterface, ResponseFactoryInterface, StreamFa
 use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\{ResponseFactory, StreamFactory};
 use Laminas\HttpHandlerRunner\Emitter\{EmitterInterface, SapiEmitter};
+use Twig\Environment;
 
 class ContainerFactory extends Container
 {
@@ -48,6 +49,7 @@ class ContainerFactory extends Container
             TaskController::class => [new ControllerFactory(TaskController::class), "create"],
             UserRepository::class => [new RepositoryFactory(UserRepository::class), "create"],
             TaskRepository::class => [new RepositoryFactory(TaskRepository::class), "create"],
+            Environment::class => [new TwigFactory(), "create"],
             Router::class => [new RouterFactory(), "create"],
             PDO::class => [new DbConnectionFactory(), "create"],
         ];
