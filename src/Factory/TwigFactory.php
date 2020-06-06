@@ -2,8 +2,9 @@
 
 namespace App\Factory;
 
-use App\Core\FactoryInterface;
 use App\Core\AlertQueue;
+use App\Core\FactoryInterface;
+use App\Controller\AuthController;
 use Psr\Container\ContainerInterface as Container;
 use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
@@ -47,6 +48,7 @@ class TwigFactory implements FactoryInterface
             )
         );
 
+        $twig->addGlobal("user", $container->get(AuthController::class)->getLoggedIn());
         $twig->addGlobal("message", $container->get(AlertQueue::class));
 
         return $twig;

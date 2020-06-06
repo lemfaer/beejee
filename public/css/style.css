@@ -18,3 +18,17 @@
     background-color: #343a40;
     border-color: #343a40;
 }
+.btn-logout {
+    background-color: #fff;
+    border-color: #fff;
+}
+.btn-logout:hover {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+    font-size: 0;
+}
+.btn-logout:hover:after {
+    content: 'Logout';
+    font-size: 1rem;
+}

@@ -18,6 +18,32 @@ class UserRepository extends Repository
     protected $userPool = [];
 
     /**
+     * Get user by login
+     *
+     * @param string $login
+     *
+     * @throws \Exception not found
+     *
+     * @return \App\Model\User
+     */
+    public function getUserByLogin(string $login): User
+    {
+        $sql = "SELECT * FROM users WHERE login = ? LIMIT 1";
+        $params = [$login];
+
+        $statm = $this->db->prepare($sql);
+        $statm->execute($params);
+
+        $users = $this->buildUsers($statm);
+
+        if (empty($users)) {
+            throw new Exception("User not found");
+        }
+
+        return array_shift($users);
+    }
+
+    /**
      * Get multiple users by ids
      *
      * @param array $ids

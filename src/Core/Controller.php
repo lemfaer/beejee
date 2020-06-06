@@ -38,11 +38,12 @@ abstract class Controller
      * @param \Psr\Container\ContainerInterface $container
      * @param \Psr\Http\Message\ServerRequestInterface $request
      */
-    public function __construct(Container $container, Request $request, AlertQueue $message)
+    public function __construct(Container $container, Request $request)
     {
         $this->container = $container;
         $this->request = $request;
-        $this->message = $message;
+
+        $this->message = $container->get(AlertQueue::class);
     }
 
     /**

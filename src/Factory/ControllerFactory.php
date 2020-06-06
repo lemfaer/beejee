@@ -40,8 +40,6 @@ class ControllerFactory implements FactoryInterface
         $class = $this->class;
         $request = $container->get(Request::class);
 
-        $message = $container->get(AlertQueue::class);
-
-        return new $class($container, $request, $message);
+        return new $class($container, $request);
     }
 }

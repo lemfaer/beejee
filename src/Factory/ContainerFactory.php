@@ -5,7 +5,7 @@ namespace App\Factory;
 use PDO;
 use App\Core\{Router, Container, AlertQueue};
 use App\Handler\RequestHandler;
-use App\Controller\{HelloController, TaskController};
+use App\Controller\{HelloController, TaskController, AuthController};
 use App\Repository\{UserRepository, TaskRepository};
 use App\Validator\TaskFormValidator;
 use Psr\Container\ContainerInterface;
@@ -14,6 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\{ResponseFactory, StreamFactory};
 use Laminas\HttpHandlerRunner\Emitter\{EmitterInterface, SapiEmitter};
 use Symfony\Component\Security\Csrf\{CsrfTokenManagerInterface, CsrfTokenManager};
+use Symfony\Component\Security\Csrf\TokenStorage\{ClearableTokenStorageInterface, NativeSessionTokenStorage};
 use Twig\Environment;
 
 class ContainerFactory extends Container
@@ -37,6 +38,7 @@ class ContainerFactory extends Container
             StreamFactoryInterface::class => new StreamFactory(),
             EmitterInterface::class => new SapiEmitter(),
             CsrfTokenManagerInterface::class => new CsrfTokenManager(),
+            ClearableTokenStorageInterface::class => new NativeSessionTokenStorage("auth"),
         ];
     }
 
@@ -52,6 +54,7 @@ class ContainerFactory extends Container
             RequestHandlerInterface::class => [new HandlerFactory(), "create"],
             HelloController::class => [new ControllerFactory(HelloController::class), "create"],
             TaskController::class => [new ControllerFactory(TaskController::class), "create"],
+            AuthController::class => [new ControllerFactory(AuthController::class), "create"],
             UserRepository::class => [new RepositoryFactory(UserRepository::class), "create"],
             TaskRepository::class => [new RepositoryFactory(TaskRepository::class), "create"],
             Environment::class => [new TwigFactory(), "create"],

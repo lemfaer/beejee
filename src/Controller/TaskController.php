@@ -49,7 +49,7 @@ class TaskController extends Controller
      * @example POST /new
      * @example POST /update/{id}
      */
-    public function form_submit(): Response
+    public function formSubmit(): Response
     {
         $data = $this->request->getParsedBody();
         $validator = $this->container->get(TaskFormValidator::class);

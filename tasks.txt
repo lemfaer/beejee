@@ -11,6 +11,8 @@
 11. new task
 12. csrf protection
 13. login
-14. ...
+14. logout
+15. edit
+16. ...
 
 9.7 h so far

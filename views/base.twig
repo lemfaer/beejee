@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <title>
       {% block title %}
-        Welcome!
+        {% if user is not empty %}
+          Welcome {{ user }}!
+        {% else %}
+          Welcome!
+        {% endif %}
+
       {% endblock %}
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -28,9 +33,19 @@
                   </li>
                 {% endblock %}
                 {% block nav_auth %}
-                  <li class="nav-item capitalized">
-                    <button type="button" class="btn btn-dark">Login</button>
-                  </li>
+                  {% if user is empty %}
+                    <li class="nav-item">
+                      <a href="/login">
+                        <button type="button" class="btn btn-dark">Login</button>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item mr-2">
+                      <a href="/logout">
+                        <button type="button" class="btn btn-light btn-logout">{{ user }}</button>
+                      </a>
+                    </li>
+                  {% endif %}
                 {% endblock %}
             </ul>
           </div>

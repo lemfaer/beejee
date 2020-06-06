@@ -4,6 +4,9 @@
   Login
 {% endblock %}
 
+{% block nav_new %}
+{% endblock %}
+
 {% block nav_auth %}
   <li class="nav-item mr-2">
     <a href="/">
@@ -13,4 +16,31 @@
 {% endblock %}
 
 {% block content %}
+<form class="col-10 mx-auto" method="POST">
+  <input
+    type="hidden"
+    name="token"
+    value="{{ csrf_token('login') }}">
+  <div class="form-group">
+    <label for="form-login">Login</label>
+    <input
+      type="text"
+      class="form-control"
+      id="form-login"
+      name="login"
+      maxlength="255"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="form-password">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="form-password"
+      name="password"
+      maxlength="255"
+      required>
+  </div>
+  <button type="submit" class="btn btn-dark">Submit</button>
+</form>
 {% endblock %}
