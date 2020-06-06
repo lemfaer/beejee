@@ -105,7 +105,7 @@ class TaskRepository extends Repository
             if ($ids) {
                 $params = $ids;
                 $parts[0] = sprintf(
-                    "WHERE id IN (%s)",
+                    "WHERE t.id IN (%s)",
                     str_repeat("?,", count($ids) - 1) . '?'
                 );
             } else {
@@ -130,6 +130,39 @@ class TaskRepository extends Repository
         $users = $this->user->updatePool();
 
         return $tasks;
+    }
+
+    /**
+     * Create / Update task
+     *
+     * @param \App\Model\Task $task
+     *
+     * @return bool success
+     */
+    public function save(Task $task): bool
+    {
+        $task->user = $this->user
+            ->makeUniqueUser(
+                $task->user->email,
+                $task->user->name
+            );
+
+        $params = [
+            $task->user->id,
+            $task->description,
+            $task->status,
+        ];
+
+        if (empty($task->id)) {
+            $sql = "INSERT INTO tasks SET user_id=?, description=?, status=?";
+        } else {
+            $sql = "UPDATE tasks SET user_id=?, description=?, status=? WHERE id = ?";
+            $params[] = $task->id;
+        }
+
+        $statm = $this->db->prepare($sql);
+
+        return $statm->execute($params);
     }
 
     /**

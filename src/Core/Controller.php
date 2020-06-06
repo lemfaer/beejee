@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamFactoryInterface as StreamFactory;
 use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
+use App\Core\AlertQueue;
 
 use function json_encode;
 
@@ -26,15 +27,21 @@ abstract class Controller
     protected $request;
 
     /**
+     * @var \App\Core\AlertQueue
+     */
+    protected $message;
+
+    /**
      * Controller constructor
      *
      * @param \Psr\Container\ContainerInterface $container
      * @param \Psr\Http\Message\ServerRequestInterface $request
      */
-    public function __construct(Container $container, Request $request)
+    public function __construct(Container $container, Request $request, AlertQueue $message)
     {
         $this->container = $container;
         $this->request = $request;
+        $this->message = $message;
     }
 
     /**
@@ -55,6 +62,22 @@ abstract class Controller
                     ->get(StreamFactory::class)
                     ->createStream($body)
             );
+    }
+
+    /**
+     * Redirect to another page
+     *
+     * @param int $code http code
+     * @param string $path url
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function redirect(int $code = 200, string $path = '/'): Response
+    {
+        return $this->container
+            ->get(ResponseFactory::class)
+            ->createResponse($code)
+            ->withHeader("Location", $path);
     }
 
     /**

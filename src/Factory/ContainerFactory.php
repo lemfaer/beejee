@@ -3,10 +3,11 @@
 namespace App\Factory;
 
 use PDO;
-use App\Core\{Router, Container};
+use App\Core\{Router, Container, AlertQueue};
 use App\Handler\RequestHandler;
 use App\Controller\{HelloController, TaskController};
 use App\Repository\{UserRepository, TaskRepository};
+use App\Validator\TaskFormValidator;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\{ServerRequestInterface, ResponseFactoryInterface, StreamFactoryInterface};
 use Psr\Http\Server\RequestHandlerInterface;
@@ -29,6 +30,8 @@ class ContainerFactory extends Container
     public static function getEntries(): array
     {
         return [
+            AlertQueue::class => new AlertQueue(),
+            TaskFormValidator::class => new TaskFormValidator(),
             ResponseFactoryInterface::class => new ResponseFactory(),
             StreamFactoryInterface::class => new StreamFactory(),
             EmitterInterface::class => new SapiEmitter(),

@@ -57,14 +57,14 @@ class UserRepository extends Repository
         /*
          * Create user if not exists
          */
-        $sql = "INSERT IGNORE SET email=?, name=?";
+        $sql = "INSERT IGNORE INTO users SET email=?, name=?";
         $statm = $this->db->prepare($sql);
         $statm->execute([$email, $name]);
 
         /*
          * Select user data from db by user email
          */
-        $sql = "SELECT * FROM user WHERE email = ? LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
         $statm = $this->db->prepare($sql);
         $statm->execute([$email]);
 

@@ -53,7 +53,7 @@ class ExecuteController implements MiddlewareInterface
         $router = $this->container->get(Router::class);
 
         $server = $request->getServerParams();
-        $uri = rtrim($server["REQUEST_URI"], "/");
+        $uri = rtrim(parse_url($server["REQUEST_URI"], PHP_URL_PATH), "/");
         $method = $server["REQUEST_METHOD"];
 
         [$handler, $args] = $router->dispatch($method, $uri);

@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use Exception;
+use App\Model\User;
+use App\Model\Task;
 use App\Core\Controller;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Repository\TaskRepository;
+use App\Validator\TaskFormValidator;
 
 class TaskController extends Controller
 {
@@ -27,12 +30,58 @@ class TaskController extends Controller
     }
 
     /**
+     * @example /new
+     */
+    public function new(): Response
+    {
+        return $this->template(200, "task");
+    }
+
+    /**
+     * @example /update/{id}
+     */
+    public function update(int $id): Response
+    {
+        // ...
+    }
+
+    /**
+     * @example POST /new
+     * @example POST /update/{id}
+     */
+    public function form_submit(): Response
+    {
+        $data = $this->request->getParsedBody();
+        $validator = $this->container->get(TaskFormValidator::class);
+
+        $task = new Task();
+        $task->user = new User();
+        $success = false;
+
+        try {
+            $validator->sanitizeData($task, $data);
+            $success = true;
+        } catch (Exception $e) {
+            foreach ($validator->getErrors() as $error) {
+                $this->message->enqueue($error);
+            }
+        }
+
+        if ($success) {
+            $this->container
+                ->get(TaskRepository::class)
+                ->save($task);
+        }
+
+        return $this->redirect(200, "/");
+    }
+
+    /**
      * @example /get/{id}
      */
     public function single(string $id): Response
     {
-        $task = $this
-            ->container
+        $task = $this->container
             ->get(TaskRepository::class)
             ->getTaskById($id);
 

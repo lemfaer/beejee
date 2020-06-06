@@ -9,4 +9,7 @@
 9. pagination
 10. sorting
 11. new task
-12. ...
+12. login
+13. ...
+
+9.7 h so far

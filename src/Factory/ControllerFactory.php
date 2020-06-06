@@ -5,6 +5,7 @@ namespace App\Factory;
 use Exception;
 use App\Core\Controller;
 use App\Core\FactoryInterface;
+use App\Core\AlertQueue;
 use Psr\Container\ContainerInterface as Container;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -39,6 +40,8 @@ class ControllerFactory implements FactoryInterface
         $class = $this->class;
         $request = $container->get(Request::class);
 
-        return new $class($container, $request);
+        $message = $container->get(AlertQueue::class);
+
+        return new $class($container, $request, $message);
     }
 }
