@@ -12,7 +12,7 @@ class RequestFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): ServerRequestInterface
+    public function create(Container $container): object
     {
         return ServerRequestFactory::fromGlobals(
             $_SERVER,

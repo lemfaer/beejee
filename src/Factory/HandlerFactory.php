@@ -14,7 +14,7 @@ class HandlerFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): RequestHandlerInterface
+    public function create(Container $container): object
     {
         $middleware = $this->createMiddleware($container);
 

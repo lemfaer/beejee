@@ -164,7 +164,7 @@ class TaskController extends Controller
             "start",
             "end",
             "prev",
-            "next",
+            "next"
         );
     }
 }

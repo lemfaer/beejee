@@ -11,7 +11,7 @@ class DbConnectionFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): PDO
+    public function create(Container $container): object
     {
         $config = $container->get("config");
 

@@ -17,6 +17,9 @@ class ErrorHandler
      */
     public function exceptionHandler(Throwable $e): void
     {
+        var_export($e);
+        die;
+
         if ($e->getCode() === 404) {
             header("HTTP/1.0 404 Not Found");
         } else {

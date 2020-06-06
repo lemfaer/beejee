@@ -15,7 +15,7 @@ class RepositoryFactory implements FactoryInterface
      *
      * @var string
      */
-    protected string $class;
+    protected $class;
 
     /**
      * RepositoryFactory construct
@@ -34,7 +34,7 @@ class RepositoryFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): Repository
+    public function create(Container $container): object
     {
         $class = $this->class;
 

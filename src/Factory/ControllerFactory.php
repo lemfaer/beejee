@@ -35,7 +35,7 @@ class ControllerFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): Controller
+    public function create(Container $container): object
     {
         $class = $this->class;
         $request = $container->get(Request::class);

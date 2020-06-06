@@ -11,7 +11,7 @@ class RouterFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): Router
+    public function create(Container $container): object
     {
         $routes = $container->get("routes");
 

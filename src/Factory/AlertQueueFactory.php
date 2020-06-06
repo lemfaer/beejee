@@ -12,7 +12,7 @@ class AlertQueueFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): AlertQueue
+    public function create(Container $container): object
     {
         $storage = $container->get(ClearableTokenStorageInterface::class);
 

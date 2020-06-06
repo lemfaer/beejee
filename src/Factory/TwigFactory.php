@@ -17,7 +17,7 @@ class TwigFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Container $container): Environment
+    public function create(Container $container): object
     {
         $config = $container->get("config");
 
