@@ -15,8 +15,15 @@
 {% block content %}
 <form class="col-10 mx-auto" method="POST">
   {% if task is defined %}
-    <input type="hidden" name="id" value="{{ task.id }}">
+    <input
+      type="hidden"
+      name="id"
+      value="{{ task.id }}">
   {% endif %}
+  <input
+    type="hidden"
+    name="token"
+    value="{{ csrf_token('save-task') }}">
   <div class="form-group">
     <label for="form-name">Name</label>
     <input

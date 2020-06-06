@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamFactoryInterface as StreamFactory;
 use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
+use Symfony\Component\Security\Csrf\{CsrfTokenManagerInterface, CsrfToken};
 use App\Core\AlertQueue;
 
 use function json_encode;
@@ -114,5 +115,18 @@ abstract class Controller
         return $this
             ->response($code, $body)
             ->withHeader("Content-Type", "application/json");
+    }
+
+    /**
+     * Checks the validity of a CSRF token.
+     *
+     * @param string      $id    The id used when generating the token
+     * @param string|null $token The actual token sent with the request that should be validated
+     */
+    protected function isCsrfTokenValid(string $id, ?string $token): bool
+    {
+        return $this->container
+            ->get(CsrfTokenManagerInterface::class)
+            ->isTokenValid(new CsrfToken($id, $token));
     }
 }

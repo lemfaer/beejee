@@ -56,12 +56,17 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->user = new User();
-        $success = false;
+        $success = true;
+
+        if (!$this->isCsrfTokenValid("save-task", $data["token"])) {
+            $this->message->enqueue("Anti-CSRF is not valid");
+            $success = false;
+        }
 
         try {
             $validator->sanitizeData($task, $data);
-            $success = true;
         } catch (Exception $e) {
+            $success = false;
             foreach ($validator->getErrors() as $error) {
                 $this->message->enqueue($error);
             }

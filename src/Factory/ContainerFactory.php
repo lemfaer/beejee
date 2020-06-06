@@ -13,6 +13,7 @@ use Psr\Http\Message\{ServerRequestInterface, ResponseFactoryInterface, StreamFa
 use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\{ResponseFactory, StreamFactory};
 use Laminas\HttpHandlerRunner\Emitter\{EmitterInterface, SapiEmitter};
+use Symfony\Component\Security\Csrf\{CsrfTokenManagerInterface, CsrfTokenManager};
 use Twig\Environment;
 
 class ContainerFactory extends Container
@@ -35,6 +36,7 @@ class ContainerFactory extends Container
             ResponseFactoryInterface::class => new ResponseFactory(),
             StreamFactoryInterface::class => new StreamFactory(),
             EmitterInterface::class => new SapiEmitter(),
+            CsrfTokenManagerInterface::class => new CsrfTokenManager(),
         ];
     }
 

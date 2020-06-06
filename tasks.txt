@@ -9,7 +9,8 @@
 9. pagination
 10. sorting
 11. new task
-12. login
-13. ...
+12. csrf protection
+13. login
+14. ...
 
 9.7 h so far

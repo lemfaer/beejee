@@ -3,10 +3,13 @@
 namespace App\Factory;
 
 use App\Core\FactoryInterface;
+use App\Core\AlertQueue;
 use Psr\Container\ContainerInterface as Container;
 use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
+use Twig\TwigFunction;
 use Twig\Environment;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class TwigFactory implements FactoryInterface
 {
@@ -31,6 +34,20 @@ class TwigFactory implements FactoryInterface
         );
 
         $twig->addExtension(new DebugExtension());
+
+        $twig->addFunction(
+            new TwigFunction(
+                "csrf_token",
+                function (string $tokenId) use ($container): string {
+                    return $container
+                        ->get(CsrfTokenManagerInterface::class)
+                        ->getToken($tokenId)
+                        ->getValue();
+                }
+            )
+        );
+
+        $twig->addGlobal("message", $container->get(AlertQueue::class));
 
         return $twig;
     }
