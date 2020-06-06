@@ -32,13 +32,12 @@ class ContainerFactory extends Container
     public static function getEntries(): array
     {
         return [
-            AlertQueue::class => new AlertQueue(),
             TaskFormValidator::class => new TaskFormValidator(),
             ResponseFactoryInterface::class => new ResponseFactory(),
             StreamFactoryInterface::class => new StreamFactory(),
             EmitterInterface::class => new SapiEmitter(),
             CsrfTokenManagerInterface::class => new CsrfTokenManager(),
-            ClearableTokenStorageInterface::class => new NativeSessionTokenStorage("auth"),
+            ClearableTokenStorageInterface::class => new NativeSessionTokenStorage("app"),
         ];
     }
 
@@ -50,6 +49,7 @@ class ContainerFactory extends Container
     public static function getFactories(): array
     {
         return [
+            AlertQueue::class => [new AlertQueueFactory(), "create"],
             ServerRequestInterface::class => [new RequestFactory(), "create"],
             RequestHandlerInterface::class => [new HandlerFactory(), "create"],
             HelloController::class => [new ControllerFactory(HelloController::class), "create"],

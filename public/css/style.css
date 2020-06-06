@@ -40,3 +40,10 @@
 .inline-note:hover {
     color: rgba(0,0,0,.7);
 }
+.alerts {
+    position: absolute;
+    z-index: 5;
+    width: 50%;
+    left: 25%;
+    bottom: 5%;
+}

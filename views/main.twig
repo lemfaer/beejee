@@ -55,10 +55,10 @@
   <tbody>
     {% for task in tasks %}
       <tr>
-        <td>{{ task.user.name }}</td>
+        <td>{{ task.user.name|e }}</td>
         <td>{{ task.user.email }}</td>
         <td>
-          <pre>{{ task.description }}</pre>
+          <pre>{{ task.description|e }}</pre>
           {% if task.updated %}
             <span class="inline-note">(edited)</span>
           {% endif %}

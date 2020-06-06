@@ -111,6 +111,8 @@ class TaskController extends Controller
                 ->save($task);
         }
 
+        $this->message->enqueue("Task saved");
+
         return $this->redirect(200, "/");
     }
 

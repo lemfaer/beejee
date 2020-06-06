@@ -30,7 +30,7 @@
       id="form-name"
       placeholder="John Cena"
       name="name"
-      value="{{ task.user.name }}"
+      value="{{ task.user.name|e }}"
       maxlength="255"
       required>
   </div>
@@ -55,7 +55,7 @@
       placeholder="Lorem ipsum dolor sit amet."
       name="description"
       maxlength="1000"
-      required>{{ task.description }}</textarea>
+      required>{{ task.description|e }}</textarea>
   </div>
   <div class="form-check">
     <input
