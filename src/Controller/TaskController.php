@@ -42,21 +42,54 @@ class TaskController extends Controller
      */
     public function update(int $id): Response
     {
-        // ...
+        $access = $this->container
+            ->get(AuthController::class)
+            ->isLoggedIn();
+
+        if (!$access) {
+            throw new Exception("Page not found", 404);
+        }
+
+        $task = $this->container
+            ->get(TaskRepository::class)
+            ->getTaskById($id);
+
+        return $this->template(200, "task", compact("task"));
+    }
+
+    /**
+     * @example POST /update/{id}
+     */
+    public function updateFormSubmit(int $id): Response
+    {
+        $access = $this->container
+            ->get(AuthController::class)
+            ->isLoggedIn();
+
+        if (!$access) {
+            throw new Exception("Page not found", 404);
+        }
+
+        $task = $this->container
+            ->get(TaskRepository::class)
+            ->getTaskById($id);
+
+        return $this->formSubmit($task);
     }
 
     /**
      * @example POST /new
-     * @example POST /update/{id}
      */
-    public function formSubmit(): Response
+    public function formSubmit(?Task $task = null): Response
     {
+        $success = true;
         $data = $this->request->getParsedBody();
         $validator = $this->container->get(TaskFormValidator::class);
 
-        $task = new Task();
-        $task->user = new User();
-        $success = true;
+        if (!isset($task)) {
+            $task = new Task();
+            $task->user = new User();
+        }
 
         if (!$this->isCsrfTokenValid("save-task", $data["token"])) {
             $this->message->enqueue("Anti-CSRF is not valid");

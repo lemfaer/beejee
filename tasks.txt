@@ -13,6 +13,9 @@
 13. login
 14. logout
 15. edit
-16. ...
+
+16. alerts
+17. 404
+18. ...
 
 9.7 h so far

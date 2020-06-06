@@ -32,3 +32,11 @@
     content: 'Logout';
     font-size: 1rem;
 }
+.inline-note {
+    color: rgba(0,0,0,.5);
+    text-decoration: none !important;
+    font-style: italic;
+}
+.inline-note:hover {
+    color: rgba(0,0,0,.7);
+}

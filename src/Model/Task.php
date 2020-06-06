@@ -82,7 +82,7 @@ class Task extends Model
      */
     public function getExecuted(): bool
     {
-        $this->status === static::STATUS_DONE;
+        return $this->status === static::STATUS_DONE;
     }
 
     /**

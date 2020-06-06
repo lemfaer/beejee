@@ -8,6 +8,8 @@ return [
     [ "GET", "~^/sort/([\w-]+)/page/([1-9][0-9]*)$~", [ c\TaskController::class, "list" ] ],
     [ "GET", "~^/new$~", [ c\TaskController::class, "new" ] ],
     [ "POST", "~^/new$~", [ c\TaskController::class, "formSubmit" ] ],
+    [ "GET", "~^/update/(\d+)$~", [ c\TaskController::class, "update" ] ],
+    [ "POST", "~^/update/(\d+)$~", [ c\TaskController::class, "updateFormSubmit" ] ],
     [ "GET", "~^/login$~", [ c\AuthController::class, "login" ] ],
     [ "GET", "~^/logout$~", [ c\AuthController::class, "logout" ] ],
     [ "POST", "~^/login$~", [ c\AuthController::class, "loginSubmit" ] ],

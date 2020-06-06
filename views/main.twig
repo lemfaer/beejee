@@ -57,8 +57,18 @@
       <tr>
         <td>{{ task.user.name }}</td>
         <td>{{ task.user.email }}</td>
-        <td><pre>{{ task.description }}<pre></td>
-        <td>{{ task.status }}</td>
+        <td>
+          <pre>{{ task.description }}</pre>
+          {% if task.updated %}
+            <span class="inline-note">(edited)</span>
+          {% endif %}
+        </td>
+        <td>
+          {{ task.status }}
+          {% if user is not empty %}
+            <a href="/update/{{ task.id }}" class="inline-note">(edit)</a>
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>
